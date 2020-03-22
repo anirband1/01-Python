@@ -74,19 +74,19 @@ first_mission()
 
 time.sleep(2.5)
 
-image_resize('../data/walktalk.jpeg')         # walkie-talkie
+image_resize('../Data/walktalk.jpeg')         # walkie-talkie
 
-image_resize('../data/rope.jpeg')             # rope
+image_resize('../Data/rope.jpeg')             # rope
 
-image_resize('../data/torch.jpeg')            # torch
+image_resize('../Data/torch.jpeg')            # torch
 
-image_resize('../data/coffee.jpeg')           # coffee
+image_resize('../Data/coffee.jpeg')           # coffee
 
-image_resize('../data/phone.jpeg')            # phone
+image_resize('../Data/phone.jpeg')            # phone
 
-image_resize('../data/mac.jpeg')              # mac
+image_resize('../Data/mac.jpeg')              # mac
 
-image_resize('../data/backpack.jpeg')         # backpack
+image_resize('../Data/backpack.jpeg')         # backpack
 time.sleep(1)
 
 backpack = ["walkie-talkie","rope","torch","coffee","phone","mac"]
@@ -143,7 +143,7 @@ print("<brother 2> Go now. and may the all seeing eye be with you.")
 time.sleep(2.5)
 checkpoint()
 
-image_resize("../data/timecard(eternity).jpg")
+image_resize("../Data/timecard(eternity).jpg")
 
 def on_the_way():
     #on your way
