@@ -39,10 +39,10 @@ ball.color("white")
 ball.penup()
 ball.goto(0,0)
 
-#ball movement
+#ball movement and speed
 
-ball.dx = 3
-ball.dy = 3
+ball.dx = 5
+ball.dy = 5
 
 #score
 
