@@ -1,152 +1,243 @@
-#modules
+# modules
 
 import turtle
+import random
 import time
 
-#initialization
+# turtle window
 
 window = turtle.Screen()
 
-window.title("ping pong")
+window.title("snake xenzia")
 window.bgcolor("black")
-window.setup(width = 800, height = 600)
-window.tracer(0)    
+window.setup(width = 800 , height = 600)
+window.tracer(0)
 
-#paddles
+# initializing a bunch of stuff
 
-def paddle(obj,x):
-    obj.speed(0)
-    obj.shape("square")
-    obj.color("white")
-    obj.shapesize(stretch_wid=5, stretch_len=1)
-    obj.penup()
-    obj.goto(x,0)
+steps_behind_snake = 0
 
-# on object
+tail_total_no = 0.00
 
-pad_a = turtle.Turtle()
-paddle(pad_a,-350)
+tail_arr1 = []
 
-pad_b = turtle.Turtle()
-paddle(pad_b,350)
+# initializing score
 
-#ball init
-
-ball = turtle.Turtle()
-ball.speed(0)
-ball.shape("circle")
-ball.color("white")
-ball.penup()
-ball.goto(0,0)
-
-#ball movement
-
-ball.dx = 3
-ball.dy = 3
-
-#score
-
-score_a = 0
-score_b = 0
+pscore = 0
 
 score = turtle.Turtle()
 score.color("white")
 score.penup()
 score.goto(0, 260)
 score.hideturtle()
-score.write("Player A: 0  Player B: 0", align = "center", font = ("Courier", 24 ))
-#up and down
 
-#pad a
+# initializing all turtle object's attributes
 
-def pad_a_up():
-    y = pad_a.ycor()
+def object_frame(obj):
+    obj.speed(0)
+    obj.shape("square")
+    obj.shapesize(stretch_wid = 0.9523 , stretch_len = 0.9523)
+    obj.color("pink")
+    obj.penup()
+    obj.goto(1000,1000)
+
+# head
+
+snake = turtle.Turtle()
+object_frame(snake)
+snake.color("white")
+snake.goto(0,0)
+snake._setmode(mode = "logo")
+
+# food
+
+food = turtle.Turtle()
+object_frame(food)
+food.color("green")
+food.goto(100,20)
+
+# tails created bfore use
+
+no_of_tails = 100
+
+for i in range(no_of_tails):
+    tail_arr1.append(turtle.Turtle())
+
+for tail in tail_arr1:
+    object_frame(tail)
+
+# infinite moves
+
+direction = ""
+
+def inf_right():
+    x = snake.xcor()
+    x += 20
+    snake.setx(x)
+    snake.seth(90)
+    return True
+
+def inf_left():
+    x = snake.xcor()
+    x -= 20
+    snake.setx(x)
+    snake.seth(270)
+    return True
+
+def inf_up():
+    y = snake.ycor()
     y += 20
-    pad_a.sety(y)
+    snake.sety(y)
+    snake.seth(0)
+    return True
 
-def pad_a_down():
-    y = pad_a.ycor()
+def inf_down():
+    y = snake.ycor()
     y -= 20
-    pad_a.sety(y)
+    snake.sety(y)
+    snake.seth(180)
+    return True
 
-#pad b
+# function to return position of tail with respect to head
+# input - target tail no.
+# output - target tail_no.'s co-ords
 
-def pad_b_up():
-    y = pad_b.ycor()
-    y += 20
-    pad_b.sety(y)
+def tail_pos():
 
-def pad_b_down():
-    y = pad_b.ycor()
-    y -= 20
-    pad_b.sety(y)
+    prev_pos = 0
+
+    if snake.heading() == 90 :
+        prev_pos = [reference_co[0] - 20 , reference_co[1]]
+
+    if snake.heading() == 180 :
+        prev_pos = [reference_co[0] , reference_co[1] + 20]
+
+    if snake.heading() == 270 :
+        prev_pos = [reference_co[0] + 20 , reference_co[1]]
+
+    if snake.heading() == 0 :
+        prev_pos = [reference_co[0] , reference_co[1] - 20]
+
+    return prev_pos
+# if tail_total_no >= 1:
+#     tail1.goto(tail_pos(1))
+
+def tail_follow(target_tail,target_tail_no):
+    if tail_total_no >= target_tail_no:
+        target_tail.goto(tail_pos(target_tail_no))
 
 
-#keyboard binding
+
+# keyboard binding
 
 window.listen()
-window.onkeypress(pad_a_up, "w")
-window.onkeypress(pad_a_down, "z")
-window.onkeypress(pad_b_up, "i")
-window.onkeypress(pad_b_down, "m")
+window.onkeypress(inf_left,"Left")
+window.onkeypress(inf_down,"Down")
+window.onkeypress(inf_right,"Right")
+window.onkeypress(inf_up,"Up")
 
-#main loop
+# reference coordinates
 
-time.sleep(3)
+# main game loop
 
 while True:
+
     window.update()
+    reference_co = [snake.xcor(),snake.ycor()]
 
-    #ball movement
+    # food coordinates
 
-    ball.setx(ball.xcor() + ball.dx)
-    ball.sety(ball.ycor() + ball.dy)
+    food_co = [food.xcor(),food.ycor()]
 
-    #bounce
+    # loops a hundred times (for 100 tails)
 
-    if ball.ycor() > 290:           #top
-        ball.dy *= -1
+    for tail in tail_arr1:
+        
 
-    if ball.ycor() < -280:          #bottom
-        ball.dy *= -1
-
-    if ball.xcor() > 380:           #right
-        score_a += 1
-        ball.goto(0,0)
-        ball.dx *= -1
-
-        score.clear()
-        score.write(f"Player A: {score_a}  Player B: {score_b}", align = "center", font = ("Courier", 24 ))
-
-    if ball.xcor() < -390:          #left
-        score_b +=1
-        ball.goto(0,0)
-        ball.dx *= -1
-
-        score.clear()
-        score.write(f"Player A: {score_a}  Player B: {score_b}", align = "center", font = ("Courier", 24 ))
-
-    #ball collision
-
-    if ball.xcor() > 330 and ball.ycor() < (pad_b.ycor() + 55) and ball.ycor() > (pad_b.ycor() - 55):
-        ball.dx *= -1
-
-    if ball.xcor() < -330 and ball.ycor() < (pad_a.ycor() + 55) and ball.ycor() > (pad_a.ycor() - 55):
-        ball.dx *= -1
-
-    #restrict paddle
-    if pad_a.ycor() > 250:
-        pad_a.sety(250)
-
-    if pad_a.ycor() < -250:
-        pad_a.sety(-250)
+        # every time head eats food, a)new tail added behind head b)food teleports
 
 
-    if pad_b.ycor() > 250:
-        pad_b.sety(250)
+        # tail follows head
 
-    if pad_b.ycor() < -250:
-        pad_b.sety(-250)
-
+        if tail.pos() != (1000,1000):
 
     
+            if snake.heading() == 90 :
+                prev_pos = [reference_co[0] - 20 , reference_co[1]]
+
+            if snake.heading() == 180 :
+                prev_pos = [reference_co[0] , reference_co[1] + 20]
+
+            if snake.heading() == 270 :
+                prev_pos = [reference_co[0] + 20 , reference_co[1]]
+
+            if snake.heading() == 0 :
+                prev_pos = [reference_co[0] , reference_co[1] - 20]
+
+            tail.goto(prev_pos)
+
+            reference_co = prev_pos
+
+        snake_co = (snake.xcor(),snake.ycor())
+
+        if [snake.xcor(),snake.ycor()] == food_co:
+    
+            # new tail added behind head
+
+            if snake.heading() == 90:
+                tail_arr1[ int(tail_total_no / 100)].goto(reference_co[0] - 20 , reference_co[1])
+
+            if snake.heading() == 180:      # up-down
+                tail_arr1[ int(tail_total_no / 100)].goto(reference_co[0] , reference_co[1] + 20)
+
+            if snake.heading() == 270:       # right-left
+                tail_arr1[ int(tail_total_no / 100)].goto(reference_co[0] + 20 , reference_co[1])
+
+            if snake.heading() == 0:        # down-up 
+                tail_arr1[ int(tail_total_no / 100)].goto(reference_co[0] , reference_co[1] - 20)
+
+
+            tail_total_no += 1
+
+            #  food teleports randomly
+
+            food_new_x = random.randrange(-380,400,20)
+            food_new_y = random.randrange(-280,280,20)
+            food.goto(food_new_x,food_new_y) 
+
+        # if snake hits boundary, goes back to start
+
+        if snake.xcor() > 390:
+            for tail in tail_arr1:
+                snake.setx(0)
+                snake.sety(0)
+                tail.goto(1000,1000)
+
+        if snake.xcor() < -400:
+            for tail in tail_arr1:
+                snake.setx(0)
+                snake.sety(0)
+                tail.goto(1000,1000)
+
+        if snake.ycor() > 290:
+            for tail in tail_arr1:
+                snake.setx(0)
+                snake.sety(0)
+                tail.goto(1000,1000)
+                              
+        if snake.ycor() < -290:
+            for tail in tail_arr1:
+                snake.setx(0)
+                snake.sety(0)
+                tail.goto(1000,1000)
+ 
+
+
+
+
+'''reference_co = snake_co
+prev_pos = ...
+for tail in tail_arr:
+    reference_co = prev_pos
+    if heading...:
+        tail.goto(prev_pos)'''
