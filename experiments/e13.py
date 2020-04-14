@@ -9,7 +9,7 @@ seconds = 1  # Note duration of 3 seconds
 t = np.linspace(0, seconds, seconds * fs, False)
 
 # Generate a 440 Hz sine wave
-note = np.sin(frequency * t * 0.5 * np.pi)
+note = np.sin(frequency * t * 2 * np.pi)
 
 # Ensure that highest value is in 16-bit range
 audio = note * (2**15 - 1) / np.max(np.abs(note))

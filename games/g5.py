@@ -17,7 +17,7 @@ window.tracer(0)
 
 steps_behind_snake = 0
 
-tail_total_no = 0.00
+tail_total_no = 0
 
 tail_arr1 = []
 
@@ -134,15 +134,13 @@ while True:
     reference_co = [snake.xcor(),snake.ycor()]
     old_heading = snake.heading()
 
-    # forever moving
-
-
     # loops a hundred times (for 100 tails)
+    old_pos = reference_co 
 
     for tail in tail_arr1:
-
+    
         if tail.pos() != (1000,1000):
-
+    
             bfor_move_h = tail.heading()
             tail.seth(old_heading)
             tail.goto(tail_pos(tail))
@@ -150,10 +148,10 @@ while True:
             reference_co = tail_pos(tail)
 
         if snake.pos() == food.pos():
-
+    
             bfor_move_h = tail.heading()
             tail.seth(old_heading)
-            tail_arr1[int(tail_total_no / no_of_tails)].goto( tail_pos(tail) )
+            tail_arr1[int(tail_total_no)].goto(tail_pos(tail))
             old_heading = bfor_move_h
 
             tail_total_no += 1
@@ -164,7 +162,6 @@ while True:
             food_new_y = random.randrange(-280,280,20)
             food.goto(food_new_x,food_new_y) 
 
-        old_pos = reference_co 
 
         # for following the head and consecutive tail
         
@@ -176,26 +173,43 @@ while True:
     # if snake hits boundary, goes back to start
 
     if snake.xcor() > 390:
+
+        snake.setx(0)
+        snake.sety(0)
+
         for tail in tail_arr1:
-            snake.setx(0)
-            snake.sety(0)
             tail.goto(1000,1000)
+
+        tail_total_no = 0
 
     if snake.xcor() < -400:
+
+        snake.setx(0)
+        snake.sety(0)
+
         for tail in tail_arr1:
-            snake.setx(0)
-            snake.sety(0)
             tail.goto(1000,1000)
 
+        tail_total_no = 0
+
     if snake.ycor() > 290:
+
+        snake.setx(0)
+        snake.sety(0)
+
         for tail in tail_arr1:
-            snake.setx(0)
-            snake.sety(0)
             tail.goto(1000,1000)
-                            
+
+        tail_total_no = 0
+                        
     if snake.ycor() < -290:
+
+        snake.setx(0)
+        snake.sety(0)
+
         for tail in tail_arr1:
-            snake.setx(0)
-            snake.sety(0)
             tail.goto(1000,1000)
+                                               
+        tail_total_no = 0
+
 

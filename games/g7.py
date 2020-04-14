@@ -129,78 +129,37 @@ window.onkeypress(inf_up,"Up")
 
 
 while True:
-    
+
+    time.sleep(0.1)
+
     window.update()
     reference_co = [snake.xcor(),snake.ycor()]
     old_heading = snake.heading()
 
     # forever moving
-
-
+    
     snake.forward(20)
 
     # loops a hundred times (for 100 tails)
 
     for tail in tail_arr1:
-        
 
-        # every time head eats food, a)new tail added behind head b)food teleports
-    
-        # tail follows head
+        # new tail added behind head
 
         # if tail.pos() != (1000,1000):
-    
-        #     if snake.heading() == 90 :
-        #         prev_pos = [reference_co[0] - 20 , reference_co[1]]
 
-        #     if snake.heading() == 180 :
-        #         prev_pos = [reference_co[0] , reference_co[1] + 20]
-
-        #     if snake.heading() == 270 :
-        #         prev_pos = [reference_co[0] + 20 , reference_co[1]]
-
-        #     if snake.heading() == 0 :
-        #         prev_pos = [reference_co[0] , reference_co[1] - 20]
-
-        #     reference_co = prev_pos
-
-
-
-
-        #tail heading logic
-
-    
-
-            # new tail added behind head
-
-        if tail.pos() != (1000,1000):
-
-            bfor_move_h = tail.heading()
-            tail.seth(old_heading)
-            tail.goto(tail_pos(tail))
-            old_heading = bfor_move_h
-            reference_co = tail_pos(tail)
+        #     bfor_move_h = tail.heading()
+        #     tail.seth(old_heading)
+        #     tail.goto(tail_pos(tail))
+        #     old_heading = bfor_move_h
+        #     reference_co = tail_pos(tail)
 
         if snake.pos() == food.pos():
 
             bfor_move_h = tail.heading()
             tail.seth(old_heading)
-            tail_arr1[int(tail_total_no / no_of_tails)].goto( tail_pos(tail) )
+            tail_arr1[int(tail_total_no)].goto( tail_pos(tail) )
             old_heading = bfor_move_h
-
-
-        #     if snake.heading() == 90:
-        #         tail_arr1[ int(tail_total_no / 100)].goto(reference_co[0] - 20 , reference_co[1])
-
-        #     if snake.heading() == 180:      # up-down
-        #         tail_arr1[ int(tail_total_no / 100)].goto(reference_co[0] , reference_co[1] + 20)
-
-        #     if snake.heading() == 270:       # right-left
-        #         tail_arr1[ int(tail_total_no / 100)].goto(reference_co[0] + 20 , reference_co[1])
-
-        #     if snake.heading() == 0:        # down-up 
-        #         tail_arr1[ int(tail_total_no / 100)].goto(reference_co[0] , reference_co[1] - 20)
-
 
             tail_total_no += 1
 
@@ -210,7 +169,8 @@ while True:
             food_new_y = random.randrange(-280,280,20)
             food.goto(food_new_x,food_new_y) 
 
-        old_pos = reference_co    
+        old_pos = reference_co   
+
         # for following the head and consecutive tail
         
         if tail.pos() != (1000,1000) and window.listen():
