@@ -74,19 +74,19 @@ first_mission()
 
 time.sleep(2.5)
 
-image_resize('../Data/walktalk.jpeg')         # walkie-talkie
+image_resize('../../Data/walktalk.jpeg')         # walkie-talkie
 
-image_resize('../Data/rope.jpeg')             # rope
+image_resize('../../Data/rope.jpeg')             # rope
 
-image_resize('../Data/torch.jpeg')            # torch
+image_resize('../../Data/torch.jpeg')            # torch
 
-image_resize('../Data/coffee.jpeg')           # coffee
+image_resize('../../Data/coffee.jpeg')           # coffee
 
-image_resize('../Data/phone.jpeg')            # phone
+image_resize('../../Data/phone.jpeg')            # phone
 
-image_resize('../Data/mac.jpeg')              # mac
+image_resize('../../Data/mac.jpeg')              # mac
 
-image_resize('../Data/backpack.jpeg')         # backpack
+image_resize('../../Data/backpack.jpeg')         # backpack
 time.sleep(1)
 
 backpack = ["walkie-talkie","rope","torch","coffee","phone","mac"]
